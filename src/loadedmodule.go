@@ -7,7 +7,7 @@ import (
 
 	"github.com/tetratelabs/wazero"
 	"github.com/tetratelabs/wazero/api"
-	"github.com/tetratelabs/wazero/wasi_snapshot_preview1"
+	"github.com/tetratelabs/wazero/imports/wasi_snapshot_preview1"
 )
 
 type LoadedModule struct {
@@ -17,8 +17,8 @@ type LoadedModule struct {
 }
 
 func NewLoadedModule(wasmBytes []byte) LoadedModule {
-	r := wazero.NewRuntime()
 	ctx := context.Background()
+	r := wazero.NewRuntime(ctx)
 	if _, err := wasi_snapshot_preview1.Instantiate(ctx, r); err != nil {
 		log.Panicln(err)
 	}
